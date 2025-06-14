@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Leah, With Love</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#f9a8d4',secondary:'#fef3c7'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .script-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .heart-cursor {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23f9a8d4'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") 12 12, auto;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+        
+        .heart {
+            position: absolute;
+            opacity: 0;
+            animation: float-up 4s ease-in-out forwards;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100%) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -24px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #f9a8d4;
+            border: 3px solid white;
+            z-index: 1;
+        }
+        
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: -17px;
+            top: 16px;
+            bottom: -16px;
+            width: 2px;
+            background-color: #f9a8d4;
+            opacity: 0.5;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px -5px rgba(249, 168, 212, 0.4);
+            z-index: 10;
+        }
+        
+        .gallery-caption {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-auto-rows: 10px;
+            grid-gap: 16px;
+        }
+        
+        .masonry-item {
+            grid-row-end: span calc(var(--height) / 10);
+        }
+        
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end);
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 6px;
+            background: #f9a8d4;
+            border-radius: 5px;
+            background-image: linear-gradient(#f9a8d4, #f9a8d4);
+            background-repeat: no-repeat;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #f9a8d4;
+            cursor: pointer;
+            box-shadow: 0 0 2px 0 rgba(0,0,0,0.1);
+        }
+        
+        .custom-checkbox {
+            position: relative;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border: 2px solid #f9a8d4;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .custom-checkbox.checked::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 8px;
+            width: 6px;
+            height: 12px;
+            border: solid #f9a8d4;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+        
+        .switch-input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e5e7eb;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .switch-input:checked + .switch-slider {
+            background-color: #f9a8d4;
+        }
+        
+        .switch-input:checked + .switch-slider:before {
+            transform: translateX(24px);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f9a8d4;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="heart-cursor bg-white text-gray-800">
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=romantic%2520elegant%2520scene%2520with%2520soft%2520pink%2520roses%2520and%2520petals%2520scattered%2520on%2520a%2520light%2520cream%2520background%2520with%2520golden%2520accents%2520and%2520soft%2520bokeh%2520lights%2520creating%2520a%2520dreamy%2520atmosphere%2520perfect%2520for%2520a%2520romantic%2520proposal%2520scene&width=1920&height=1080&seq=hero-bg&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-pink-100 bg-opacity-30"></div>
+        <div class="w-full relative z-10 px-6 md:px-12 max-w-7xl mx-auto">
+            <div class="text-center">
+                <h1 class="script-font text-7xl md:text-9xl mb-6 text-pink-500 drop-shadow-lg">Leah</h1>
+                <p class="serif-font text-2xl md:text-3xl mb-8 text-gray-800 max-w-3xl mx-auto leading-relaxed">Every moment with you has been a beautiful journey that I cherish deeply.</p>
+                <div class="flex justify-center gap-4">
+                    <button class="bg-primary text-white px-8 py-3 rounded-button text-lg font-medium hover:bg-pink-400 transition-all shadow-lg flex items-center gap-2">
+                        <span class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-heart-3-fill ri-lg"></i>
+                        </span>
+                    
+                    </button>
+                </div>
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-indicator">
+                    <div class="w-8 h-8 flex items-center justify-center text-pink-500">
+                        <i class="ri-arrow-down-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Leah's Photo Gallery -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
+            <h2 class="serif-font text-4xl md:text-5xl text-center mb-6 text-gray-800">Leah's Gallery</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Every smile, every laugh, every moment with you is a treasure I hold dear to my heart.</p>
+            
+            <div class="mb-10">
+                <h3 class="script-font text-2xl text-pink-500 mb-6 text-center">Her Beautiful Smile</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="gallery-item relative rounded-lg overflow-hidden shadow-md group">
+                        <img src="3.jpeg" alt="Leah smiling" class="w-full h-80 object-cover object-top">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-4 gallery-caption">
+                                <p class="text-white font-medium">Your smile lights up my world</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative rounded-lg overflow-hidden shadow-md group">
+                        <img src="1.jpeg" alt="Leah laughing" class="w-full h-80 object-cover object-top">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-4 gallery-caption">
+                                <p class="text-white font-medium">Your laugh is my favorite sound</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative rounded-lg overflow-hidden shadow-md group">
+                        <img src="2.jpeg" alt="Leah smiling" class="w-full h-80 object-cover object-top">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-4 gallery-caption">
+                                <p class="text-white font-medium">The way you look at me</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+        </div>
+    </section>
+    <!-- Love Letter Section -->
+    <section class="py-20 bg-gradient-to-b from-pink-50 to-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <img src="https://readdy.ai/api/search-image?query=delicate%2520pattern%2520of%2520handwritten%2520love%2520letters%2520and%2520small%2520heart%2520drawings%2520scattered%2520across%2520a%2520cream%2520colored%2520paper%2520with%2520vintage%2520feel%2520and%2520subtle%2520ink%2520stains%2520creating%2520a%2520romantic%2520nostalgic%2520background%2520texture&width=1920&height=1080&seq=letter-bg&orientation=landscape" alt="Love letter background" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+            <h2 class="serif-font text-4xl md:text-5xl text-center mb-16 text-gray-800">My Letter to You</h2>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8 md:p-12 border border-pink-100">
+                <div class="script-font text-xl md:text-2xl text-gray-700 leading-relaxed space-y-6" id="loveLetter">
+                    <p>My dearest Leah,</p>
+                    <p>From the moment I first saw you, something in my heart knew you were special. Your smile, your laugh, the way your eyes light up when you talk about things you love - everything about you captivates me.</p>
+                    <p>These past years together have been the most beautiful chapter of my life. Every day with you is a gift that I cherish deeply. You've taught me what it means to truly love someone - to support their dreams, to celebrate their joys, and to stand by them through challenges.</p>
+                    <p>I love the way you see beauty in the smallest things. </p>
+                    <p>You've made me a better person, Leah. You've shown me what it means to be truly present, to listen with my whole heart, and to love unconditionally.</p>
+                    <p>As I write this letter, my heart is full of dreams for our future together. I see us building a home filled with laughter and love. I see us traveling to places we've always wanted to explore. I see us growing together, supporting each other through every season of life.</p>
+                    <p>Which brings me to the reason for this letter...</p>
+                </div>
+                
+                <div class="mt-12 flex items-center justify-center">
+                    <div class="flex items-center gap-3">
+                        <span class="text-gray-600">Music:</span>
+                        <label class="switch">
+                            <input type="checkbox" class="switch-input" id="musicToggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- The Big Question -->
+    <section class="py-20 bg-white relative" id="proposalSection">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://readdy.ai/api/search-image?query=elegant%2520pattern%2520of%2520rose%2520petals%2520and%2520small%2520hearts%2520scattered%2520across%2520a%2520light%2520background%2520with%2520subtle%2520gold%2520accents%2520and%2520soft%2520bokeh%2520lights%2520creating%2520a%2520romantic%2520dreamy%2520atmosphere%2520perfect%2520for%2520a%2520proposal&width=1920&height=1080&seq=proposal-bg&orientation=landscape" alt="Proposal background" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+            <div class="text-center">
+                <h2 class="serif-font text-5xl md:text-7xl mb-12 text-primary">Will You Marry Me?</h2>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
+                    <button id="yesButton" class="bg-primary text-white px-12 py-4 rounded-button text-xl font-medium hover:bg-pink-400 transition-all shadow-lg flex items-center justify-center gap-2 whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-heart-3-fill ri-lg"></i>
+                        </span>
+                        <span>Yes!</span>
+                    </button>
+                    <button id="definitelyButton" class="bg-white text-primary border-2 border-primary px-12 py-4 rounded-button text-xl font-medium hover:bg-pink-50 transition-all shadow-lg flex items-center justify-center gap-2 whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-heart-3-line ri-lg"></i>
+                        </span>
+                        <span>Yes, definitely!</span>
+                    </button>
+                </div>
+                
+                <div id="celebrationMessage" class="hidden">
+                    <h3 class="script-font text-4xl text-pink-500 mb-6">She Said Yes!</h3>
+                    <p class="text-xl text-gray-700 mb-8">I can't wait to spend the rest of my life with you, Leah!</p>
+                    <div class="rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                        <img src="https://readdy.ai/api/search-image?query=romantic%2520engagement%2520scene%2520with%2520a%2520couple%2520embracing%2520with%2520joyful%2520expressions%2520surrounded%2520by%2520rose%2520petals%2520and%2520soft%2520candlelight%2520with%2520an%2520engagement%2520ring%2520visible%2520creating%2520a%2520magical%2520celebration%2520moment&width=1000&height=600&seq=celebration&orientation=landscape" alt="Celebration" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6 md:px-12 text-center">
+            <div class="mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 h-12 mx-auto fill-primary">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </div>
+            <p class="script-font text-xl text-gray-600">J & L</p>
+            <p class="text-gray-500 mt-2">June 14, 2025</p>
+        </div>
+    </footer>
+
+    <script id="floating-hearts-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Random size
+                const size = Math.random() * 20 + 10;
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                
+                // Random position
+                const startPos = Math.random() * 100;
+                heart.style.left = `${startPos}%`;
+                heart.style.bottom = '0';
+                
+                // Random color
+                const colors = ['#f9a8d4', '#fbcfe8', '#f472b6', '#fef3c7'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.backgroundColor = randomColor;
+                
+                // Random rotation
+                const rotation = Math.random() * 360;
+                heart.style.transform = `rotate(${rotation}deg)`;
+                
+                // Random duration
+                const duration = Math.random() * 3 + 3;
+                heart.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                const delay = Math.random() * 2;
+                heart.style.animationDelay = `${delay}s`;
+                
+                // Shape it like a heart
+                heart.style.borderRadius = '50% 50% 0 0';
+                heart.style.transform = `rotate(45deg)`;
+                
+                // Add to container
+                heartsContainer.appendChild(heart);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, (duration + delay) * 1000);
+            }
+            
+            // Create hearts periodically
+            setInterval(createHeart, 300);
+        });
+    </script>
+
+    <script id="love-letter-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const loveLetter = document.getElementById('loveLetter');
+            const paragraphs = loveLetter.querySelectorAll('p');
+            
+            // Hide all paragraphs initially except the first one
+            paragraphs.forEach((p, index) => {
+                if (index > 0) {
+                    p.style.opacity = '0';
+                    p.style.transform = 'translateY(20px)';
+                    p.style.transition = 'opacity 1s ease, transform 1s ease';
+                }
+            });
+            
+            // Reveal paragraphs as user scrolls
+            function revealParagraphs() {
+                paragraphs.forEach((p, index) => {
+                    const rect = p.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    if (rect.top < windowHeight * 0.8) {
+                        setTimeout(() => {
+                            p.style.opacity = '1';
+                            p.style.transform = 'translateY(0)';
+                        }, index * 300);
+                    }
+                });
+            }
+            
+            // Initial check
+            revealParagraphs();
+            
+            // Check on scroll
+            window.addEventListener('scroll', revealParagraphs);
+            
+            // Music toggle
+            const musicToggle = document.getElementById('musicToggle');
+            let audio;
+            
+            musicToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Create audio element if it doesn't exist
+                    if (!audio) {
+                        audio = new Audio();
+                        audio.src = 'all.mp3'; // Replace with your romantic song
+                        audio.loop = true;
+                    }
+                    audio.play();
+                } else {
+                    if (audio) {
+                        audio.pause();
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script id="proposal-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const yesButton = document.getElementById('yesButton');
+            const definitelyButton = document.getElementById('definitelyButton');
+            const celebrationMessage = document.getElementById('celebrationMessage');
+            const proposalSection = document.getElementById('proposalSection');
+            
+            function createConfetti() {
+                const colors = ['#f9a8d4', '#fbcfe8', '#f472b6', '#fef3c7', '#ffffff'];
+                
+                for (let i = 0; i < 150; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    // Random properties
+                    const size = Math.random() * 10 + 5;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 3;
+                    const duration = Math.random() * 3 + 2;
+                    
+                    // Set styles
+                    confetti.style.width = `${size}px`;
+                    confetti.style.height = `${size}px`;
+                    confetti.style.backgroundColor = color;
+                    confetti.style.left = `${left}%`;
+                    confetti.style.top = '0';
+                    confetti.style.opacity = '0';
+                    
+                    // Random shape
+                    const shapes = ['circle', 'square', 'triangle'];
+                    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                    if (shape === 'circle') {
+                        confetti.style.borderRadius = '50%';
+                    } else if (shape === 'triangle') {
+                        confetti.style.width = '0';
+                        confetti.style.height = '0';
+                        confetti.style.backgroundColor = 'transparent';
+                        confetti.style.borderLeft = `${size/2}px solid transparent`;
+                        confetti.style.borderRight = `${size/2}px solid transparent`;
+                        confetti.style.borderBottom = `${size}px solid ${color}`;
+                    }
+                    
+                    // Animation
+                    confetti.style.animation = `confetti-fall ${duration}s ease-in-out ${delay}s forwards`;
+                    
+                    // Add to container
+                    proposalSection.appendChild(confetti);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, (duration + delay) * 1000);
+                }
+            }
+            
+            function celebrate() {
+                // Show celebration message
+                celebrationMessage.classList.remove('hidden');
+                
+                // Scroll to celebration message
+                setTimeout(() => {
+                    celebrationMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 500);
+                
+                // Create confetti
+                createConfetti();
+                
+                // Add CSS for confetti animation if it doesn't exist
+                if (!document.getElementById('confetti-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'confetti-style';
+                    style.textContent = `
+                        @keyframes confetti-fall {
+                            0% {
+                                transform: translateY(0) rotate(0deg);
+                                opacity: 1;
+                            }
+                            100% {
+                                transform: translateY(100vh) rotate(720deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+            
+            // Button event listeners
+            yesButton.addEventListener('click', celebrate);
+            definitelyButton.addEventListener('click', celebrate);
+            
+            // Make the buttons move away from cursor on hover
+            const buttons = [yesButton, definitelyButton];
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseover', function(e) {
+                    // Only for "Yes, definitely!" button to make it playful
+                    if (button === definitelyButton) {
+                        const rect = button.getBoundingClientRect();
+                        const btnCenter = {
+                            x: rect.left + rect.width / 2,
+                            y: rect.top + rect.height / 2
+                        };
+                        
+                        const mousePos = {
+                            x: e.clientX,
+                            y: e.clientY
+                        };
+                        
+                        // Calculate direction to move (away from mouse)
+                        const dirX = btnCenter.x - mousePos.x;
+                        const dirY = btnCenter.y - mousePos.y;
+                        
+                        // Normalize and scale
+                        const length = Math.sqrt(dirX * dirX + dirY * dirY);
+                        const moveX = (dirX / length) * 100;
+                        const moveY = (dirY / length) * 100;
+                        
+                        // Apply transform
+                        button.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                        
+                        // Reset after a short delay
+                        setTimeout(() => {
+                            button.style.transform = 'translate(0, 0)';
+                        }, 500);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="gallery-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    const imgSrc = img.src;
+                    const caption = this.querySelector('.gallery-caption p')?.textContent || '';
+                    
+                    // Create lightbox
+                    const lightbox = document.createElement('div');
+                    lightbox.classList.add('fixed', 'inset-0', 'z-50', 'bg-black/90', 'flex', 'items-center', 'justify-center', 'p-4');
+                    
+                    // Create content
+                    const content = document.createElement('div');
+                    content.classList.add('max-w-4xl', 'max-h-[90vh]', 'relative');
+                    
+                    // Image
+                    const fullImg = document.createElement('img');
+                    fullImg.src = imgSrc;
+                    fullImg.classList.add('max-w-full', 'max-h-[80vh]', 'object-contain');
+                    
+                    // Caption
+                    const captionEl = document.createElement('p');
+                    captionEl.textContent = caption;
+                    captionEl.classList.add('text-white', 'text-center', 'mt-4');
+                    
+                    // Close button
+                    const closeBtn = document.createElement('button');
+                    closeBtn.innerHTML = '<i class="ri-close-line ri-2x"></i>';
+                    closeBtn.classList.add('absolute', 'top-0', 'right-0', 'text-white', 'p-2', 'hover:text-pink-300', 'transition-colors');
+                    
+                    // Append elements
+                    content.appendChild(fullImg);
+                    content.appendChild(captionEl);
+                    content.appendChild(closeBtn);
+                    lightbox.appendChild(content);
+                    document.body.appendChild(lightbox);
+                    
+                    // Close on button click or background click
+                    closeBtn.addEventListener('click', () => lightbox.remove());
+                    lightbox.addEventListener('click', (e) => {
+                        if (e.target === lightbox) {
+                            lightbox.remove();
+                        }
+                    });
+                    
+                    // Close on escape key
+                    document.addEventListener('keydown', function escHandler(e) {
+                        if (e.key === 'Escape') {
+                            lightbox.remove();
+                            document.removeEventListener('keydown', escHandler);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
